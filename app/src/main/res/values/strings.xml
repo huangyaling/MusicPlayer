@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MusicPlayer</string>
+    <string name="tab_account">账户</string>
+    <string name="tab_discover">发现音乐</string>
+    <string name="tab_music">我的音乐</string>
+    <string name="tab_friend">朋友</string>
+</resources>
