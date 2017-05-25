@@ -11,6 +11,7 @@ import com.huangyaling.musicplayer.fragment.TabAccountFragment;
 import com.huangyaling.musicplayer.fragment.TabDiscoverFragment;
 import com.huangyaling.musicplayer.fragment.TabFriendFragment;
 import com.huangyaling.musicplayer.fragment.TabMusicFragment;
+import com.huangyaling.musicplayer.view.SlidingMenu;
 
 import android.util.Log;
 
@@ -32,6 +33,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     private FragmentManager mFragmentManager;
 
+    private SlidingMenu mMenu;
+
 
     //private List<Fragment> mFragemnt = new ArrayList<Fragment>();
 
@@ -39,6 +42,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //setContentView(R.layout.slidingmenu);
         initView();
         init();
         setTabSelection(TAB_ACCOUNT);
