@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="drawlayout_list">
+        <item>设置</item>
+        <item>我的好友</item>
+        <item>定时停止播放音乐</item>
+        <item>我的消息</item>
+        <item>退出</item>
+    </string-array>
+    <string-array name="drawlayout_list_icon">
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+    </string-array>
+</resources>
