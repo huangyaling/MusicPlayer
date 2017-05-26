@@ -8,7 +8,6 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
 
-import java.util.Objects;
 
 /**
  * Created by huangyaling on 2017/5/25.
