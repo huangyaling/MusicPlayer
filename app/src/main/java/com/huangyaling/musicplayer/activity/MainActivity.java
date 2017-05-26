@@ -1,12 +1,11 @@
 package com.huangyaling.musicplayer.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -17,7 +16,7 @@ import com.huangyaling.musicplayer.adapter.ViewPagerAdapter;
 
 import java.util.List;
 
-public class MainActivity extends FragmentActivity implements View.OnClickListener{
+public class MainActivity extends Activity implements View.OnClickListener{
     private LinearLayout tab_account;
     private LinearLayout tab_discover;
     private LinearLayout tab_music;
