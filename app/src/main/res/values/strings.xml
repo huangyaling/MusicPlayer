@@ -10,4 +10,7 @@
     <string name="viewpager_music">歌单</string>
     <string name="viewpager_top">排行榜</string>
     <string name="viewpage_recommand">个性推荐</string>
+    <string name="main_recommand_fm">私人FM</string>
+    <string name="main_recommand_daily">每日歌曲推荐</string>
+    <string name="main_recommand_rank">云音乐新歌榜</string>
 </resources>

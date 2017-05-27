@@ -29,8 +29,7 @@
     <LinearLayout
         android:layout_gravity="start"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#ff9489">
+        android:layout_height="match_parent">
         <include layout="@layout/draw_layout"/>
     </LinearLayout>
 </android.support.v4.widget.DrawerLayout>

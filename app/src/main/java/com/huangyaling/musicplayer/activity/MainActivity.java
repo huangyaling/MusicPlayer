@@ -7,16 +7,17 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.huangyaling.musicplayer.R;
 import com.huangyaling.musicplayer.adapter.DrawLayoutListViewAdapter;
 import com.huangyaling.musicplayer.adapter.ViewPagerAdapter;
 
-import java.util.List;
 
-public class MainActivity extends Activity implements View.OnClickListener{
+public class MainActivity extends Activity implements View.OnClickListener ,AdapterView.OnItemClickListener{
     private LinearLayout tab_account;
     private LinearLayout tab_discover;
     private LinearLayout tab_music;
@@ -27,6 +28,12 @@ public class MainActivity extends Activity implements View.OnClickListener{
     private PagerTabStrip tabStrip = null;
     private ViewPagerAdapter viewPagerAdapter;
     private DrawLayoutListViewAdapter drawLayoutListViewAdapter;
+
+    private static final int SettingsItem = 0;
+    private static final int Friend = 1;
+    private static final int Clock = 2;
+    private static final int Message = 3;
+    private static final int LoginOut = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +64,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         pager.setAdapter(viewPagerAdapter);
         drawLayoutListViewAdapter = new DrawLayoutListViewAdapter(this);
         drawLayoutListView.setAdapter(drawLayoutListViewAdapter);
+        drawLayoutListView.setOnItemClickListener(this);
     }
 
     @Override
@@ -70,6 +78,27 @@ public class MainActivity extends Activity implements View.OnClickListener{
             case R.id.tab_music:
                 break;
             case R.id.tab_friend:
+                break;
+        }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        switch (position){
+            case SettingsItem:
+                Toast.makeText(this,"SettingsItem",Toast.LENGTH_SHORT).show();
+                break;
+            case Friend:
+                Toast.makeText(this,"Friend",Toast.LENGTH_SHORT).show();
+                break;
+            case Clock:
+                Toast.makeText(this,"Clock",Toast.LENGTH_SHORT).show();
+                break;
+            case Message:
+                Toast.makeText(this,"Message",Toast.LENGTH_SHORT).show();
+                break;
+            case LoginOut:
+                Toast.makeText(this,"LoginOut",Toast.LENGTH_SHORT).show();
                 break;
         }
     }

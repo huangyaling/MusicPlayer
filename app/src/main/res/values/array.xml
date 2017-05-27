@@ -8,10 +8,10 @@
         <item>退出</item>
     </string-array>
     <string-array name="drawlayout_list_icon">
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
+        <item>@drawable/settings</item>
+        <item>@drawable/friend</item>
+        <item>@drawable/clock</item>
+        <item>@drawable/message</item>
+        <item>@drawable/loginout</item>
     </string-array>
 </resources>
