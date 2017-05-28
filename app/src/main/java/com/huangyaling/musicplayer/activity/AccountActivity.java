@@ -8,7 +8,7 @@ import com.huangyaling.musicplayer.R;
 /**
  * Created by huangyaling on 2017/5/26.
  */
-public class AccountActivity extends Activity {
+public class AccountActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
