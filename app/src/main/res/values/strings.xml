@@ -13,4 +13,9 @@
     <string name="main_recommand_fm">私人FM</string>
     <string name="main_recommand_daily">每日歌曲推荐</string>
     <string name="main_recommand_rank">云音乐新歌榜</string>
+    <string name="mymusic_item01">本地音乐</string>
+    <string name="mymusic_item02">最近播放</string>
+    <string name="mymusic_item03">下载管理</string>
+    <string name="mymusic_item04">我的电台</string>
+    <string name="mymusic_item05">我的收藏</string>
 </resources>
