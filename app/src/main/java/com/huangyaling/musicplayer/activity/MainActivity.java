@@ -69,9 +69,9 @@ public class MainActivity extends Activity implements View.OnClickListener ,Adap
         drawLayoutListViewAdapter = new DrawLayoutListViewAdapter(this);
         drawLayoutListView.setAdapter(drawLayoutListViewAdapter);
         drawLayoutListView.setOnItemClickListener(this);
-
         myMusicListAdapter = new MyMusicListAdapter(this);
         myMusicListView.setAdapter(myMusicListAdapter);
+
     }
 
     @Override

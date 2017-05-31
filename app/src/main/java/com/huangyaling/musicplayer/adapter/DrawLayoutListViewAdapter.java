@@ -30,7 +30,6 @@ public class DrawLayoutListViewAdapter extends BaseAdapter {
         mContext = context;
         listTitle = context.getResources().getStringArray(R.array.drawlayout_list);
         listIcon = context.getResources().obtainTypedArray(R.array.drawlayout_list_icon);
-        //listIcon = context.getResources().getStringArray(R.array.drawlayout_list_icon);
         for(int i = 0;i<listTitle.length;i++){
             Map<String,Object> map = new HashMap<String,Object>();
             map.put("drawlayout_list_title",listTitle[i]);

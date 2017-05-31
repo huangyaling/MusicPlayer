@@ -16,11 +16,11 @@
     </string-array>
 
     <string-array name="mymusic_list">
-        <item>@string/mymusic_item01</item>
-        <item>@string/mymusic_item02</item>
-        <item>@string/mymusic_item03</item>
-        <item>@string/mymusic_item04</item>
-        <item>@string/mymusic_item05</item>
+        <item>本地音乐</item>
+        <item>最近播放</item>
+        <item>下载管理</item>
+        <item>我的电台</item>
+        <item>我的收藏</item>
     </string-array>
     <string-array name="mymusic_list_icon">
         <item>@drawable/mymusic_icon_01</item>
