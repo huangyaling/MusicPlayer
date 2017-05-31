@@ -47,12 +47,14 @@ public class MainActivity extends Activity implements View.OnClickListener ,Adap
     }
 
     private void initView(){
+        viewPagerAdapter = new ViewPagerAdapter(this);
         tab_account = (LinearLayout) findViewById(R.id.tab_account);
         tab_discover = (LinearLayout) findViewById(R.id.tab_discover);
         tab_music = (LinearLayout) findViewById(R.id.tab_music);
         tab_friend = (LinearLayout) findViewById(R.id.tab_friend);
         drawLayoutListView = (ListView) findViewById(R.id.drawlayout_listview);
-        myMusicListView = (ListView) findViewById(R.id.mymusic_list);
+
+        myMusicListView = (ListView) viewPagerAdapter.viewsContainer.get(1).findViewById(R.id.mymusic_list);
 
         pager = (ViewPager) findViewById(R.id.main_viewpager);
         tabStrip = (PagerTabStrip) findViewById(R.id.viewpager_tab);
@@ -64,7 +66,7 @@ public class MainActivity extends Activity implements View.OnClickListener ,Adap
         tab_discover.setOnClickListener(this);
         tab_music.setOnClickListener(this);
         tab_friend.setOnClickListener(this);
-        viewPagerAdapter = new ViewPagerAdapter(this);
+
         pager.setAdapter(viewPagerAdapter);
         drawLayoutListViewAdapter = new DrawLayoutListViewAdapter(this);
         drawLayoutListView.setAdapter(drawLayoutListViewAdapter);
@@ -83,6 +85,7 @@ public class MainActivity extends Activity implements View.OnClickListener ,Adap
             case R.id.tab_discover:
                 break;
             case R.id.tab_music:
+                startActivity(new Intent(MainActivity.this,MyAllMusicActivity.class));
                 break;
             case R.id.tab_friend:
                 break;

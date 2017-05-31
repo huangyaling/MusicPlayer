@@ -10,12 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.huangyaling.musicplayer.R;
-import com.huangyaling.musicplayer.view.MyMusicListViewHolder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import android.util.Log;
 
 /**
  * Created by huangyaling on 2017/5/30.
@@ -36,24 +34,20 @@ public class MyMusicListAdapter extends BaseAdapter {
             musicMap.put("mymusic_icon",mymusicIcon.getResourceId(i,0));
             mymusiclist.add(musicMap);
         }
-        Log.d("huangyaling","mymusiclist:"+mymusiclist);
     }
 
     @Override
     public int getCount() {
-        Log.d("huangyaling","mymusiclist.size():"+mymusiclist.size());
         return mymusiclist.size();
     }
 
     @Override
     public Object getItem(int position) {
-        Log.d("huangyaling","mymusiclist.get(position):"+mymusiclist.get(position));
         return mymusiclist.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        Log.d("huangyaling","position:"+position);
         return position;
     }
 
@@ -66,14 +60,15 @@ public class MyMusicListAdapter extends BaseAdapter {
             myMusicListViewHolder.TypeTitle = (TextView) convertView.findViewById(R.id.mymusic_list_title);
             myMusicListViewHolder.TypeIcon = (ImageView) convertView.findViewById(R.id.mymusic_list_icon);
             convertView.setTag(myMusicListViewHolder);
-            Log.d("huangyaling", "1.myMusicListViewHolder:" + myMusicListViewHolder);
         }else{
             myMusicListViewHolder = (MyMusicListViewHolder) convertView.getTag();
-            Log.d("huangyaling", "2.myMusicListViewHolder:" + myMusicListViewHolder);
         }
         myMusicListViewHolder.TypeIcon.setImageResource(Integer.parseInt(mymusiclist.get(position).get("mymusic_icon").toString()));
         myMusicListViewHolder.TypeTitle.setText(mymusiclist.get(position).get("mymusic_type").toString());
-        Log.d("huangyaling", "convertView:" + convertView);
         return convertView;
+    }
+ class MyMusicListViewHolder {
+        public TextView TypeTitle;
+        public ImageView TypeIcon;
     }
 }

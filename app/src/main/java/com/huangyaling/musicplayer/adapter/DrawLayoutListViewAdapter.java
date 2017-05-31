@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.huangyaling.musicplayer.R;
-import com.huangyaling.musicplayer.view.DrawLayoutListViewHolder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,5 +66,10 @@ public class DrawLayoutListViewAdapter extends BaseAdapter {
         drawLayoutListViewHolder.title.setText(list.get(position).get("drawlayout_list_title").toString());
         drawLayoutListViewHolder.icon.setImageResource((Integer)list.get(position).get("drawlayout_list_icon"));
         return convertView;
+    }
+
+    class DrawLayoutListViewHolder {
+        public TextView title;
+        public ImageView icon;
     }
 }

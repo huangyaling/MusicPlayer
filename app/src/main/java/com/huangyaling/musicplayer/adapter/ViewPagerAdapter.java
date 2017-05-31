@@ -15,8 +15,8 @@ import java.util.ArrayList;
  * Created by huangyaling on 2017/5/26.
  */
 public class ViewPagerAdapter extends PagerAdapter {
-    ArrayList<View> viewsContainer = new ArrayList<View>();
-    ArrayList<String> titleContainer = new ArrayList<String>();
+    public ArrayList<View> viewsContainer = new ArrayList<View>();
+    public ArrayList<String> titleContainer = new ArrayList<String>();
     public ViewPagerAdapter(Context context){
 
         View view1 = LayoutInflater.from(context).inflate(R.layout.viewpager01,null);
