@@ -18,4 +18,5 @@
     <string name="mymusic_item03">下载管理</string>
     <string name="mymusic_item04">我的电台</string>
     <string name="mymusic_item05">我的收藏</string>
+    <string name="permissons_toast">权限数值不合法</string>
 </resources>

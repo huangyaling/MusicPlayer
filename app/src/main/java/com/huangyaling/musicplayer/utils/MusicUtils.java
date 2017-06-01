@@ -3,7 +3,7 @@ package com.huangyaling.musicplayer.utils;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.MediaStore;
-import android.webkit.WebHistoryItem;
+import android.util.Log;
 
 import com.huangyaling.musicplayer.bean.MusicInfoBean;
 
@@ -35,6 +35,7 @@ public class MusicUtils {
                     list.add(musicInfoBean);
                 }
             }
+            Log.d("huangyaling","MusicUtils list:"+list);
             cursor.close();
         }
         return list;

@@ -1,6 +1,7 @@
 package com.huangyaling.musicplayer.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ public class AllMusicListViewAdapter extends BaseAdapter {
     public AllMusicListViewAdapter(Context mContext,List<MusicInfoBean> list) {
         this.mContext = mContext;
         this.list = list;
+        Log.d("huangyaling","AllMusicListViewAdapter list:"+list);
     }
 
     @Override
@@ -56,6 +58,7 @@ public class AllMusicListViewAdapter extends BaseAdapter {
         allMusicViewHolder.song.setText(list.get(position).song);
         allMusicViewHolder.singer.setText(list.get(position).singer);
         allMusicViewHolder.duration.setText(list.get(position).duration);
+        Log.d("huangyaling","convertView:"+convertView);
         return convertView;
     }
 
