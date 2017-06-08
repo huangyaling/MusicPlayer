@@ -32,6 +32,11 @@ public class MusicUtils {
                         musicInfoBean.song = str[0];
                         musicInfoBean.singer = str[1];
                     }
+                    Log.d("huangyaling","musicInfoBean.song : "+musicInfoBean.song);
+                    Log.d("huangyaling","musicInfoBean.singer : "+musicInfoBean.singer);
+                    Log.d("huangyaling","musicInfoBean.path : "+musicInfoBean.path);
+                    Log.d("huangyaling","musicInfoBean.duration : "+musicInfoBean.duration);
+                    Log.d("huangyaling","musicInfoBean.size : "+musicInfoBean.size);
                     list.add(musicInfoBean);
                 }
             }

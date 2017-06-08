@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.huangyaling.musicplayer.R;
@@ -28,6 +29,7 @@ public class PermissionCheckUtils {
     }
 
     public static void checkPermission(Activity activity,int... permission){
+        Log.d("huangyaling","checkPermission");
         setPermission(permission);
         List<String> list = new ArrayList<>();
         for(int i = 0;i<permissions.length;i++){

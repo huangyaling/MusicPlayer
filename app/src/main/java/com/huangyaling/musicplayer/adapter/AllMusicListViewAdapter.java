@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.huangyaling.musicplayer.R;
 import com.huangyaling.musicplayer.bean.MusicInfoBean;
+import com.huangyaling.musicplayer.utils.MusicUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +58,7 @@ public class AllMusicListViewAdapter extends BaseAdapter {
         }
         allMusicViewHolder.song.setText(list.get(position).song);
         allMusicViewHolder.singer.setText(list.get(position).singer);
-        allMusicViewHolder.duration.setText(list.get(position).duration);
+        allMusicViewHolder.duration.setText(MusicUtils.formatTime(list.get(position).duration));
         Log.d("huangyaling","convertView:"+convertView);
         return convertView;
     }
