@@ -19,4 +19,10 @@
     <string name="mymusic_item04">我的电台</string>
     <string name="mymusic_item05">我的收藏</string>
     <string name="permissons_toast">权限数值不合法</string>
+    <string name="bottom_next">"下一首播放"</string>
+    <string name="bottom_ring">"设为铃声"</string>
+    <string name="bottom_description">"查看歌曲信息"</string>
+    <string name="bottom_delete">"删除"</string>
+    <string name="bottom_favourite">"收藏到歌单"</string>
+    <string name="bottom_title">"歌曲："</string>
 </resources>

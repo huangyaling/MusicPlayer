@@ -19,6 +19,7 @@
         <activity android:name=".activity.MainActivity"/>
         <activity android:name=".activity.AccountActivity"/>
         <activity android:name=".activity.MyAllMusicActivity"/>
+        <activity android:name=".activity.CurrentMusicActivity"/>
     </application>
 
 </manifest>
