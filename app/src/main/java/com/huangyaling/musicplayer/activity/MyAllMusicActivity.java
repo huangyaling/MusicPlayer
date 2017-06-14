@@ -75,9 +75,17 @@ public class MyAllMusicActivity extends Activity implements AdapterView.OnItemCl
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(this,CurrentMusicActivity.class);
-        intent.putExtra("position",position);
+        Bundle bundle = new Bundle();
+        bundle.putString("uri",list.get(position).getPath());
+        bundle.putString("song",list.get(position).getSong());
+        bundle.putString("singer",list.get(position).getSinger());
+        bundle.putInt("position",position);
+        /*intent.putExtra("position",position);
         intent.putExtra("uri",list.get(position).getPath());
-        Log.d("huangyaling","uri = "+list.get(position).getPath());
+        intent.putExtra("song",list.get(position).getSong());
+        intent.putExtra("singer",list.get(position).getSinger());*/
+        Log.d("huangyaling", "uri = " + list.get(position).getPath());
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 }

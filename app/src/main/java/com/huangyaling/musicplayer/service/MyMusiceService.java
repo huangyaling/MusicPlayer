@@ -3,12 +3,15 @@ package com.huangyaling.musicplayer.service;
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.huangyaling.musicplayer.R;
+
+import java.net.URI;
 
 
 /**
@@ -19,6 +22,7 @@ public class MyMusiceService extends Service {
     private final String TAG = "MyMusiceService";
     private MediaPlayer mediaPlayer;
     private int startId;
+    private Uri uri;
     public enum Control{
         PLAY,PAUSE,STOP
     }
@@ -46,8 +50,10 @@ public class MyMusiceService extends Service {
                     play();
                     break;
                 case PAUSE:
+                    pause();
                     break;
                 case STOP:
+                    stop();
                     break;
             }
         }
@@ -85,6 +91,8 @@ public class MyMusiceService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
+        Bundle bundle = intent.getExtras();
+        uri = Uri.parse(bundle.getString("path"));
         return null;
     }
 }
