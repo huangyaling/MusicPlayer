@@ -1,18 +1,22 @@
 package com.huangyaling.musicplayer.activity;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.huangyaling.musicplayer.R;
-import com.huangyaling.musicplayer.service.MyMusiceService;
+import com.huangyaling.musicplayer.bean.SongBean;
+import com.huangyaling.musicplayer.service.PlayerService;
+import com.huangyaling.musicplayer.utils.LocalMusicUtil;
 
-import org.w3c.dom.Text;
+import java.util.ArrayList;
 
 /**
  * Created by huangyaling on 2017/6/9.
@@ -20,7 +24,6 @@ import org.w3c.dom.Text;
 public class CurrentMusicActivity extends Activity implements View.OnClickListener{
     private Intent intent;
     private Bundle bundle;
-    private int musicIndex = -1;
 
     private ImageView playMode;
     private ImageView playPre;
@@ -31,7 +34,24 @@ public class CurrentMusicActivity extends Activity implements View.OnClickListen
     private TextView song;
     private TextView singer;
 
-    private boolean isPlaying = true;
+    private static int mCurrentPosition = -1;
+    private String url;
+    private SongBean mSongBean;
+    private ArrayList<SongBean> musicInfos;
+    private int currentTime;
+    private PlayerService mPlayService;
+    private Boolean flag;
+    private boolean isPlaying;
+    private boolean isPause;
+    private PlayReceiver mPlayReceiver;
+
+
+    public static final String UPDATE_ACTION = "com.huangyaling.musicplayer.UPDATE_ACTION";
+    public static final String CTL_ACTION = "com.huangyaling.musicplayer.CTL_ACTION";
+    public static final String MUSIC_CURRENT = "com.huangyaling.musicplayer.MUSIC_CURRENT";
+    public static final String MUSIC_DURATION = "com.huangyaling.musicplayer.MUSIC_DURATION";
+    public static final String MUSIC_PALYING = "com.huangyaling.musicplayer.MUSIC_PLAYING";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +60,42 @@ public class CurrentMusicActivity extends Activity implements View.OnClickListen
     }
 
     public void init(){
+        Intent intent = getIntent();
+        int position = intent.getIntExtra("position",-1);
+        if(position != mCurrentPosition){
+            mCurrentPosition = position;
+            flag = true;
+            isPlaying = true;
+            isPause = false;
+        }else{
+            flag = false;
+            isPause = false;
+            isPlaying = true;
+        }
+        musicInfos = LocalMusicUtil.getAllSongs(this);
+        mSongBean = musicInfos.get(mCurrentPosition);
+        mPlayService = new PlayerService();
+        mPlayReceiver = new PlayReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(UPDATE_ACTION);
+        filter.addAction(MUSIC_CURRENT);
+        filter.addAction(MUSIC_DURATION);
+        registerReceiver(mPlayReceiver, filter);
+
+        if(flag){
+            play();
+            isPlaying = true;
+            isPause = false;
+        }else{
+            Intent intent1 = new Intent(this,PlayerService.class);
+            intent1.putExtra("MSG",1);
+            intent1.putExtra("position",mCurrentPosition);
+            intent1.setAction("com.huangyaling.musicplayer.MUSIC_SERVICE");
+            startService(intent1);
+            isPlaying = true;
+            isPause = false;
+        }
+
         playMode = (ImageView) findViewById(R.id.play_mode);
         playPre = (ImageView) findViewById(R.id.play_pre);
         playCurrent = (ImageView) findViewById(R.id.play_current);
@@ -49,38 +105,50 @@ public class CurrentMusicActivity extends Activity implements View.OnClickListen
         song = (TextView) findViewById(R.id.current_song);
         singer = (TextView) findViewById(R.id.current_singer);
 
+        song.setText(intent.getStringExtra("displayName"));
+        singer.setText(intent.getStringExtra("artist"));
+
         playMode.setOnClickListener(this);
         playPre.setOnClickListener(this);
         playCurrent.setOnClickListener(this);
         playNext.setOnClickListener(this);
         playMenu.setOnClickListener(this);
-
-        intent = new Intent(this,MyMusiceService.class);
-        bundle = new Bundle();
-
-        song.setText(getIntent().getExtras().getString("song"));
-        singer.setText(getIntent().getExtras().getString("singer"));
-
-        playMusic();
     }
 
-    public void playMusic(){
-        bundle.putSerializable("Key",MyMusiceService.Control.PLAY);
-        intent.putExtras(bundle);
+    public void play(){
+        Intent intent = new Intent();
+        intent.setAction("com.huangyaling.musicplayer.MUSIC_SERVICE");
+        intent.setClass(this, PlayerService.class);
+        intent.putExtra("url", mSongBean.getUrl());
+        intent.putExtra("position", mCurrentPosition);
+        intent.putExtra("MSG", 1);
         startService(intent);
+        isPlaying = true;
+        isPause = false;
     }
 
-    public void pauseMusic(){
-        bundle.putSerializable("Key",MyMusiceService.Control.PAUSE);
-        intent.putExtras(bundle);
+    public void pause(){
+        Intent intent = new Intent();
+        intent.setClass(this, PlayerService.class);
+        intent.setAction("com.huangyaling.musicplayer.MUSIC_SERVICE");
+        intent.putExtra("MSG", 2);
         startService(intent);
+        playCurrent.setImageResource(R.drawable.current_pause);
+        isPlaying = false;
+        isPause = true;
     }
 
-    public void stopMusic(){
-        bundle.putSerializable("Key",MyMusiceService.Control.STOP);
-        intent.putExtras(bundle);
+    public void resume(){
+        Intent intent = new Intent();
+        intent.setAction("com.huangyaling.musicplayer.MUSIC_SERVICE");
+        intent.setClass(this, PlayerService.class);
+        intent.putExtra("MSG", 3);
         startService(intent);
+        isPause = false;
+        isPlaying = true;
     }
+
+
 
 
     @Override
@@ -93,19 +161,40 @@ public class CurrentMusicActivity extends Activity implements View.OnClickListen
             case R.id.play_current:
                 if(isPlaying){
                     playCurrent.setImageResource(R.drawable.current_pause);
-                    pauseMusic();
-                    isPlaying = false;
+                    pause();
+                }else if(isPause){
+                    playCurrent.setImageResource(R.drawable.current_play);
+                    resume();
                 }else{
                     playCurrent.setImageResource(R.drawable.current_play);
-                    playMusic();
-                    isPlaying = true;
+                    play();
                 }
+                Log.d("huangyaling","isPlaying = "+isPlaying+":isPause = "+isPause);
                 break;
             case R.id.play_next:
                 break;
             case R.id.play_menu:
                 break;
         }
+    }
 
+    public class PlayReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if(action.equals(MUSIC_CURRENT)){
+                currentTime = intent.getIntExtra("currentTime",-1);
+            }else if(action.equals(MUSIC_DURATION)){
+                int duration = intent.getIntExtra("duration",-1);
+            }else if(action.equals(UPDATE_ACTION)){
+                mCurrentPosition = intent.getIntExtra("currenr",-1);
+                mSongBean = musicInfos.get(mCurrentPosition);
+                url = mSongBean.getUrl();
+                if(mCurrentPosition>0){
+
+                }
+            }
+        }
     }
 }

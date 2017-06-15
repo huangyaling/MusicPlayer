@@ -1,7 +1,6 @@
 package com.huangyaling.musicplayer.activity;
 
 import android.Manifest;
-import android.animation.PropertyValuesHolder;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,12 +11,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.huangyaling.musicplayer.R;
 import com.huangyaling.musicplayer.adapter.AllMusicListViewAdapter;
-import com.huangyaling.musicplayer.bean.MusicInfoBean;
-import com.huangyaling.musicplayer.utils.MusicUtils;
+import com.huangyaling.musicplayer.bean.SongBean;
+import com.huangyaling.musicplayer.utils.LocalMusicUtil;
 
 import java.util.List;
 
@@ -27,7 +25,7 @@ import java.util.List;
 public class MyAllMusicActivity extends Activity implements AdapterView.OnItemClickListener{
     private ListView musicListView;
     private AllMusicListViewAdapter allMusicListViewAdapter;
-    private List<MusicInfoBean> list = null;
+    private List<SongBean> list = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +45,7 @@ public class MyAllMusicActivity extends Activity implements AdapterView.OnItemCl
         switch (requestCode){
             case 1:
                 if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    list = MusicUtils.getMusicData(this);
+                    list = LocalMusicUtil.getAllSongs(this);
                     Log.d("huangyaling","list:"+list);
                     allMusicListViewAdapter = new AllMusicListViewAdapter(this,list);
                     musicListView.setAdapter(allMusicListViewAdapter);
@@ -64,7 +62,7 @@ public class MyAllMusicActivity extends Activity implements AdapterView.OnItemCl
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)!=PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},1);
         }else{
-            list = MusicUtils.getMusicData(this);
+            list = LocalMusicUtil.getAllSongs(this);
             Log.d("huangyaling","list:"+list);
             allMusicListViewAdapter = new AllMusicListViewAdapter(MyAllMusicActivity.this,list);
             Log.d("huangyaling","allMusicListViewAdapter = "+allMusicListViewAdapter);
@@ -75,17 +73,10 @@ public class MyAllMusicActivity extends Activity implements AdapterView.OnItemCl
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(this,CurrentMusicActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("uri",list.get(position).getPath());
-        bundle.putString("song",list.get(position).getSong());
-        bundle.putString("singer",list.get(position).getSinger());
-        bundle.putInt("position",position);
-        /*intent.putExtra("position",position);
-        intent.putExtra("uri",list.get(position).getPath());
-        intent.putExtra("song",list.get(position).getSong());
-        intent.putExtra("singer",list.get(position).getSinger());*/
-        Log.d("huangyaling", "uri = " + list.get(position).getPath());
-        intent.putExtras(bundle);
+        intent.putExtra("position", position);
+        intent.putExtra("displayName",list.get(position).getDisplayName());
+        intent.putExtra("artist",list.get(position).getArtist());
+        Log.d("huangyaling", "position = " + position);
         startActivity(intent);
     }
 }
