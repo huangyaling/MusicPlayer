@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.huangyaling.musicplayer.bean.SongBean;
+import com.huangyaling.musicplayer.utils.AppControlUtils;
 import com.huangyaling.musicplayer.utils.LocalMusicUtil;
 
 import java.io.IOException;
@@ -32,10 +33,6 @@ public class PlayerService extends Service {
     public static final String CTL_ACTION = "com.huangyaling.musicplayer.CTL_ACTION";
     public static final String MUSIC_CURRENT = "com.huangyaling.musicplayer.MUSIC_CURRENT";
     public static final String MUSIC_DURATION = "com.huangyaling.musicplayer.MUSIC_DURATION";
-
-    public enum Control{
-        PLAY,PAUSE,STOP
-    }
 
     private Handler handler = new Handler(){
         public void handleMessage(Message msg){
@@ -92,11 +89,11 @@ public class PlayerService extends Service {
             path = intent.getStringExtra("url");
             msg = intent.getIntExtra("MSG",0);
             mCurrentPosition = intent.getIntExtra("position",-1);
-            if(msg ==1 ){
+            if(msg == AppControlUtils.PLAY_MSG){
                 play(0);
-            }else if(msg == 2){
+            }else if(msg == AppControlUtils.PAUSE_MSG){
                 pause();
-            }else if(msg == 3){
+            }else if(msg == AppControlUtils.RESUME_MSG){
                 resume();
             }
         }

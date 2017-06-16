@@ -9,11 +9,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.huangyaling.musicplayer.R;
 import com.huangyaling.musicplayer.bean.SongBean;
 import com.huangyaling.musicplayer.service.PlayerService;
+import com.huangyaling.musicplayer.utils.AppControlUtils;
 import com.huangyaling.musicplayer.utils.LocalMusicUtil;
 
 import java.util.ArrayList;
@@ -25,6 +27,8 @@ public class CurrentMusicActivity extends Activity implements View.OnClickListen
     private Intent intent;
     private Bundle bundle;
 
+    private SeekBar musicSeekBar;
+
     private ImageView playMode;
     private ImageView playPre;
     private ImageView playCurrent;
@@ -33,12 +37,15 @@ public class CurrentMusicActivity extends Activity implements View.OnClickListen
 
     private TextView song;
     private TextView singer;
+    private TextView seekbatTime;
+    private TextView countTime;
 
     private static int mCurrentPosition = -1;
     private String url;
     private SongBean mSongBean;
     private ArrayList<SongBean> musicInfos;
     private int currentTime;
+    private int duration;
     private PlayerService mPlayService;
     private Boolean flag;
     private boolean isPlaying;
@@ -104,9 +111,15 @@ public class CurrentMusicActivity extends Activity implements View.OnClickListen
 
         song = (TextView) findViewById(R.id.current_song);
         singer = (TextView) findViewById(R.id.current_singer);
+        seekbatTime = (TextView) findViewById(R.id.current_time);
+        countTime = (TextView) findViewById(R.id.count_time);
+
+        musicSeekBar = (SeekBar) findViewById(R.id.music_seekbar);
 
         song.setText(intent.getStringExtra("displayName"));
         singer.setText(intent.getStringExtra("artist"));
+        //seekbatTime.setText(currentTime);
+        countTime.setText(LocalMusicUtil.formatTime(mSongBean.getDuration()));
 
         playMode.setOnClickListener(this);
         playPre.setOnClickListener(this);
@@ -121,7 +134,7 @@ public class CurrentMusicActivity extends Activity implements View.OnClickListen
         intent.setClass(this, PlayerService.class);
         intent.putExtra("url", mSongBean.getUrl());
         intent.putExtra("position", mCurrentPosition);
-        intent.putExtra("MSG", 1);
+        intent.putExtra("MSG", AppControlUtils.PLAY_MSG);
         startService(intent);
         isPlaying = true;
         isPause = false;
@@ -131,7 +144,7 @@ public class CurrentMusicActivity extends Activity implements View.OnClickListen
         Intent intent = new Intent();
         intent.setClass(this, PlayerService.class);
         intent.setAction("com.huangyaling.musicplayer.MUSIC_SERVICE");
-        intent.putExtra("MSG", 2);
+        intent.putExtra("MSG", AppControlUtils.PAUSE_MSG);
         startService(intent);
         playCurrent.setImageResource(R.drawable.current_pause);
         isPlaying = false;
@@ -142,14 +155,11 @@ public class CurrentMusicActivity extends Activity implements View.OnClickListen
         Intent intent = new Intent();
         intent.setAction("com.huangyaling.musicplayer.MUSIC_SERVICE");
         intent.setClass(this, PlayerService.class);
-        intent.putExtra("MSG", 3);
+        intent.putExtra("MSG", AppControlUtils.RESUME_MSG);
         startService(intent);
         isPause = false;
         isPlaying = true;
     }
-
-
-
 
     @Override
     public void onClick(View v) {
@@ -185,8 +195,11 @@ public class CurrentMusicActivity extends Activity implements View.OnClickListen
             String action = intent.getAction();
             if(action.equals(MUSIC_CURRENT)){
                 currentTime = intent.getIntExtra("currentTime",-1);
+                seekbatTime.setText(LocalMusicUtil.formatTime(currentTime));
+                musicSeekBar.setProgress(currentTime);
             }else if(action.equals(MUSIC_DURATION)){
-                int duration = intent.getIntExtra("duration",-1);
+                duration = intent.getIntExtra("duration",-1);
+                musicSeekBar.setMax(duration);
             }else if(action.equals(UPDATE_ACTION)){
                 mCurrentPosition = intent.getIntExtra("currenr",-1);
                 mSongBean = musicInfos.get(mCurrentPosition);
