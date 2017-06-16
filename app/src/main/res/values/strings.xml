@@ -25,4 +25,6 @@
     <string name="bottom_delete">"删除"</string>
     <string name="bottom_favourite">"收藏到歌单"</string>
     <string name="bottom_title">"歌曲："</string>
+    <string name="no_pre_music">"没有上一首歌曲了"</string>
+    <string name="no_next_music">"没有下一首歌曲了"</string>
 </resources>

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.huangyaling.musicplayer.R;
 import com.huangyaling.musicplayer.bean.SongBean;
@@ -118,7 +119,6 @@ public class CurrentMusicActivity extends Activity implements View.OnClickListen
 
         song.setText(intent.getStringExtra("displayName"));
         singer.setText(intent.getStringExtra("artist"));
-        //seekbatTime.setText(currentTime);
         countTime.setText(LocalMusicUtil.formatTime(mSongBean.getDuration()));
 
         playMode.setOnClickListener(this);
@@ -167,6 +167,16 @@ public class CurrentMusicActivity extends Activity implements View.OnClickListen
             case R.id.play_mode:
                 break;
             case R.id.play_pre:
+                mCurrentPosition--;
+                if(mCurrentPosition >= 0){
+                    mSongBean = musicInfos.get(mCurrentPosition);
+                    song.setText(mSongBean.getDisplayName());
+                    singer.setText(mSongBean.getArtist());
+                    musicSeekBar.setProgress(0);
+                }else{
+                    mCurrentPosition = 0;
+                    Toast.makeText(this,getResources().getString(R.string.no_pre_music),Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.play_current:
                 if(isPlaying){
@@ -182,6 +192,15 @@ public class CurrentMusicActivity extends Activity implements View.OnClickListen
                 Log.d("huangyaling","isPlaying = "+isPlaying+":isPause = "+isPause);
                 break;
             case R.id.play_next:
+                mCurrentPosition++;
+                if(mCurrentPosition<musicInfos.size()){
+                    mSongBean = musicInfos.get(mCurrentPosition);
+                    song.setText(mSongBean.getDisplayName());
+                    singer.setText(mSongBean.getArtist());
+                }else{
+                    mCurrentPosition = musicInfos.size()-1;
+                    Toast.makeText(this,getResources().getString(R.string.no_pre_music),Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.play_menu:
                 break;
